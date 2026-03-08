@@ -59,14 +59,19 @@ describe("SubmitReview Page", () => {
   it("switches to link tab and shows URL input", async () => {
     renderSubmit();
     fireEvent.click(screen.getByText("By Link"));
-    expect(await screen.findByLabelText("Repository or file link *")).toBeInTheDocument();
+    // Radix tabs mount content on activation
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText("https://github.com/user/repo or gist link")).toBeInTheDocument();
+    });
   });
 
   it("switches to metadata tab and shows lines/files inputs", async () => {
     renderSubmit();
     fireEvent.click(screen.getByText("Lines / Files"));
-    expect(await screen.findByLabelText("Number of lines *")).toBeInTheDocument();
-    expect(screen.getByLabelText("Number of files *")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText("e.g. 500")).toBeInTheDocument();
+      expect(screen.getByPlaceholderText("e.g. 8")).toBeInTheDocument();
+    });
   });
 
   it("validates required fields on paste submit", async () => {
