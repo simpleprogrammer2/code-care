@@ -48,7 +48,7 @@ describe("SubmitReview Page", () => {
     expect(screen.getByText("Submit for")).toBeInTheDocument();
     expect(screen.getByText("Paste Code")).toBeInTheDocument();
     expect(screen.getByText("By Link")).toBeInTheDocument();
-    expect(screen.getByText("Lines / Files")).toBeInTheDocument();
+    expect(screen.getByText("Upload File")).toBeInTheDocument();
   });
 
   it("shows paste code textarea by default", () => {
