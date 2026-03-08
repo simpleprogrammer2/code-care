@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import sdk from "@stackblitz/sdk";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { useReview, usePickUpReview, useSubmitFeedback } from "@/hooks/useReviews";
+import { useReview, usePickUpReview, useSubmitFeedback, useDeleteReview } from "@/hooks/useReviews";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -11,7 +11,18 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
-import { ArrowLeft, Star, Send, Code2, Loader2 } from "lucide-react";
+import { ArrowLeft, Star, Send, Code2, Loader2, Trash2, Clock } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 /** Map our language labels → StackBlitz project template + file extension */
 const langConfig: Record<string, { template: "node" | "typescript"; ext: string; runner: string }> = {
