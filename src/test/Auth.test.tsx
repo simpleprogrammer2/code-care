@@ -65,7 +65,10 @@ describe("Auth Page", () => {
     fireEvent.change(screen.getByLabelText("Display Name"), { target: { value: "testuser" } });
     fireEvent.change(screen.getByLabelText("Email"), { target: { value: "a@b.com" } });
     fireEvent.change(screen.getByLabelText("Password"), { target: { value: "123456" } });
-    fireEvent.click(screen.getByRole("button", { name: /sign up/i }));
+    const submitBtn = screen.getByRole("button", { name: /sign up/i });
+    // Get the submit button (the one with type="submit")
+    const form = screen.getByRole("form") ?? submitBtn.closest("form");
+    fireEvent.submit(form!);
     await waitFor(() => expect(mockSignUp).toHaveBeenCalledWith("a@b.com", "123456", "testuser"));
   });
 
