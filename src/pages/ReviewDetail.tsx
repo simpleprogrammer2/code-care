@@ -300,6 +300,51 @@ const ReviewDetail = () => {
             </CardContent>
           </Card>
         )}
+
+        {/* Delete section for completed reviews (requester only) */}
+        {review.status === "completed" && isRequester && (
+          <Card className="mb-6 border-destructive/30">
+            <CardContent className="flex items-center justify-between p-6">
+              <div className="flex items-start gap-3">
+                <Clock className="mt-0.5 h-5 w-5 text-muted-foreground" />
+                <div>
+                  <p className="font-mono font-semibold text-foreground">Auto-deletion scheduled</p>
+                  <p className="text-sm text-muted-foreground">
+                    This review will be automatically deleted 30 days after completion.
+                    {review.completed_at && (
+                      <> Scheduled for deletion on{" "}
+                        <span className="font-medium text-foreground">
+                          {new Date(new Date(review.completed_at).getTime() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString()}
+                        </span>.
+                      </>
+                    )}
+                  </p>
+                </div>
+              </div>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive" size="sm" className="gap-2 shrink-0">
+                    <Trash2 className="h-4 w-4" /> Delete Now
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Delete this review?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action cannot be undone. The review, feedback, and all associated data will be permanently removed.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleDelete} disabled={deleteReview.isPending}>
+                      {deleteReview.isPending ? "Deleting..." : "Delete permanently"}
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </CardContent>
+          </Card>
+        )}
       </div>
       <Footer />
     </div>
