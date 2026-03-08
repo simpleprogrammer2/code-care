@@ -44,7 +44,7 @@ const ReviewDetail = () => {
   // Embed StackBlitz when review loads
   useEffect(() => {
     if (!review || !embedRef.current || embedLoaded.current) return;
-    if (review.status !== "in_review" && review.status !== "completed") return;
+    if (review.status !== "in_review") return;
 
     const cfg = langConfig[review.language] || langConfig.Other;
     const fileName = `index.${cfg.ext}`;
