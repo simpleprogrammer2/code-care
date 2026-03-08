@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Navbar from "@/components/Navbar";
@@ -20,6 +21,7 @@ const BrowseReviews = () => {
   const { user } = useAuth();
   const { data: reviews = [], isLoading } = useReviews(filter);
   const pickUp = usePickUpReview();
+  const navigate = useNavigate();
 
   const filtered = reviews.filter((r) =>
     r.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -29,10 +31,15 @@ const BrowseReviews = () => {
   const handlePickUp = async (id: string) => {
     try {
       await pickUp.mutateAsync(id);
-      toast.success("Review picked up! Time to review some code.");
+      toast.success("Review picked up! Opening sandbox...");
+      navigate(`/review/${id}`);
     } catch {
       toast.error("Failed to pick up review");
     }
+  };
+
+  const handleCardClick = (id: string) => {
+    navigate(`/review/${id}`);
   };
 
   return (
@@ -85,6 +92,7 @@ const BrowseReviews = () => {
                 isAuthenticated={!!user}
                 onPickUp={handlePickUp}
                 onTip={(r) => setTipReview(r)}
+                onClick={handleCardClick}
               />
             ))}
           </div>

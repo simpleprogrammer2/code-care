@@ -31,6 +31,13 @@ describe("ReviewCard", () => {
     expect(screen.getByText("TypeScript")).toBeInTheDocument();
   });
 
+  it("calls onClick when card is clicked", () => {
+    const onClick = vi.fn();
+    render(<ReviewCard review={mockReview} isAuthenticated={false} onClick={onClick} />);
+    fireEvent.click(screen.getByText("Test Review"));
+    expect(onClick).toHaveBeenCalledWith("r1");
+  });
+
   it("shows Pick Up button for open review when authenticated", () => {
     const onPickUp = vi.fn();
     render(<ReviewCard review={mockReview} isAuthenticated onPickUp={onPickUp} />);

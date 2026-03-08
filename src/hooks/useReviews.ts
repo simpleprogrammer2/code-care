@@ -22,6 +22,22 @@ export const useReviews = (filter?: string) => {
   });
 };
 
+export const useReview = (id: string) => {
+  return useQuery({
+    queryKey: [...REVIEWS_KEY, id],
+    queryFn: async (): Promise<Review> => {
+      const { data, error } = await supabase
+        .from("reviews")
+        .select("*")
+        .eq("id", id)
+        .single();
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!id,
+  });
+};
+
 export const useCreateReview = () => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -53,6 +69,27 @@ export const usePickUpReview = () => {
         .update({ reviewer_id: user.id, status: "in_review" as const })
         .eq("id", reviewId)
         .eq("status", "open")
+        .select()
+        .single();
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: REVIEWS_KEY }),
+  });
+};
+
+export const useSubmitFeedback = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ reviewId, feedback, rating }: { reviewId: string; feedback: string; rating: number }) => {
+      const { data, error } = await supabase
+        .from("reviews")
+        .update({
+          reviewer_feedback: feedback,
+          reviewer_rating: rating,
+          status: "completed" as const,
+        })
+        .eq("id", reviewId)
         .select()
         .single();
       if (error) throw error;

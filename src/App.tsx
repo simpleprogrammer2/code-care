@@ -7,6 +7,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 import Index from "./pages/Index";
 import SubmitReview from "./pages/SubmitReview";
 import BrowseReviews from "./pages/BrowseReviews";
+import ReviewDetail from "./pages/ReviewDetail";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -24,6 +25,7 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/submit" element={<SubmitReview />} />
             <Route path="/browse" element={<BrowseReviews />} />
+            <Route path="/review/:id" element={<ReviewDetail />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
