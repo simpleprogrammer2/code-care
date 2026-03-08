@@ -48,7 +48,7 @@ describe("SubmitReview Page", () => {
     expect(screen.getByText("Submit for")).toBeInTheDocument();
     expect(screen.getByText("Paste Code")).toBeInTheDocument();
     expect(screen.getByText("By Link")).toBeInTheDocument();
-    expect(screen.getByText("Lines / Files")).toBeInTheDocument();
+    expect(screen.getByText("Upload File")).toBeInTheDocument();
   });
 
   it("shows paste code textarea by default", () => {
@@ -58,14 +58,12 @@ describe("SubmitReview Page", () => {
 
   it("has link tab trigger", () => {
     renderSubmit();
-    const linkTab = screen.getByText("By Link");
-    expect(linkTab).toBeInTheDocument();
-    // Radix tabs don't fully work in jsdom, so just verify the trigger exists
+    expect(screen.getByText("By Link")).toBeInTheDocument();
   });
 
-  it("has metadata tab trigger", () => {
+  it("has upload file tab trigger", () => {
     renderSubmit();
-    expect(screen.getByText("Lines / Files")).toBeInTheDocument();
+    expect(screen.getByText("Upload File")).toBeInTheDocument();
   });
 
   it("validates required fields on paste submit", async () => {
