@@ -27,7 +27,9 @@ const SubmitReview = () => {
   const [description, setDescription] = useState("");
   const [sourceUrl, setSourceUrl] = useState("");
   const [numLines, setNumLines] = useState("");
-  const [numFiles, setNumFiles] = useState("");
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [submissionType, setSubmissionType] = useState<SubmissionType>("paste");
   const { user } = useAuth();
   const createReview = useCreateReview();
