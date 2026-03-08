@@ -104,11 +104,15 @@ export type Database = {
           description: string | null
           id: string
           language: string
+          num_files: number | null
+          num_lines: number | null
           requester_id: string
           reviewer_feedback: string | null
           reviewer_id: string | null
           reviewer_rating: number | null
+          source_url: string | null
           status: Database["public"]["Enums"]["review_status"]
+          submission_type: string
           title: string
           updated_at: string
         }
@@ -118,11 +122,15 @@ export type Database = {
           description?: string | null
           id?: string
           language: string
+          num_files?: number | null
+          num_lines?: number | null
           requester_id: string
           reviewer_feedback?: string | null
           reviewer_id?: string | null
           reviewer_rating?: number | null
+          source_url?: string | null
           status?: Database["public"]["Enums"]["review_status"]
+          submission_type?: string
           title: string
           updated_at?: string
         }
@@ -132,11 +140,15 @@ export type Database = {
           description?: string | null
           id?: string
           language?: string
+          num_files?: number | null
+          num_lines?: number | null
           requester_id?: string
           reviewer_feedback?: string | null
           reviewer_id?: string | null
           reviewer_rating?: number | null
+          source_url?: string | null
           status?: Database["public"]["Enums"]["review_status"]
+          submission_type?: string
           title?: string
           updated_at?: string
         }
