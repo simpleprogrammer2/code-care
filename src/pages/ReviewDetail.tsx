@@ -171,10 +171,12 @@ const ReviewDetail = () => {
         )}
 
         {/* Code preview for open reviews */}
-        {review.status === "open" && (
+        {(review.status === "open" || review.status === "completed") && (
           <Card className="mb-6">
             <CardHeader>
-              <CardTitle className="font-mono text-sm">Code Preview</CardTitle>
+              <CardTitle className="font-mono text-sm">
+                {review.status === "completed" ? "Code (Read-only)" : "Code Preview"}
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <pre className="max-h-[400px] overflow-auto rounded-md bg-muted p-4 font-mono text-xs text-foreground">

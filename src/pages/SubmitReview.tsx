@@ -16,7 +16,7 @@ import { useCreateReview } from "@/hooks/useReviews";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 
-const LANGUAGES = ["TypeScript", "JavaScript", "Python", "Go", "Rust", "Java", "C++", "Ruby", "SQL", "Other"];
+const LANGUAGES = ["Python"];
 
 type SubmissionType = "paste" | "link" | "upload";
 
