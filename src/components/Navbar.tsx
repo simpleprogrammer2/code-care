@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
+import NotificationBell from "@/components/NotificationBell";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
