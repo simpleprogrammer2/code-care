@@ -1,8 +1,9 @@
-import { Code2, Menu, X, LogOut } from "lucide-react";
+import { Code2, Menu, X, LogOut, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { useIsAdmin } from "@/hooks/useAdmin";
 import { toast } from "sonner";
 import NotificationBell from "@/components/NotificationBell";
 
