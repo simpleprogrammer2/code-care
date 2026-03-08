@@ -10,6 +10,7 @@ import BrowseReviews from "./pages/BrowseReviews";
 import ReviewDetail from "./pages/ReviewDetail";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
+import AdminDashboard from "./pages/AdminDashboard";
 
 const queryClient = new QueryClient();
 
