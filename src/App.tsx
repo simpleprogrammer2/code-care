@@ -10,6 +10,7 @@ import BrowseReviews from "./pages/BrowseReviews";
 import ReviewDetail from "./pages/ReviewDetail";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
+import AdminDashboard from "./pages/AdminDashboard";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
             <Route path="/submit" element={<SubmitReview />} />
             <Route path="/browse" element={<BrowseReviews />} />
             <Route path="/review/:id" element={<ReviewDetail />} />
+            <Route path="/admin" element={<AdminDashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>

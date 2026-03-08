@@ -1,14 +1,16 @@
-import { Code2, Menu, X, LogOut } from "lucide-react";
+import { Code2, Menu, X, LogOut, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { useIsAdmin } from "@/hooks/useAdmin";
 import { toast } from "sonner";
 import NotificationBell from "@/components/NotificationBell";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { user, signOut } = useAuth();
+  const { data: isAdmin } = useIsAdmin();
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
@@ -40,6 +42,11 @@ const Navbar = () => {
           ))}
           {user ? (
             <div className="flex items-center gap-3">
+              {isAdmin && (
+                <Link to="/admin" className="flex items-center gap-1 text-sm text-primary transition-colors hover:text-primary/80">
+                  <Shield className="h-3.5 w-3.5" /> Admin
+                </Link>
+              )}
               <NotificationBell />
               <span className="font-mono text-xs text-muted-foreground">{user.email}</span>
               <Button variant="secondary" size="sm" onClick={handleSignOut} className="gap-1">
