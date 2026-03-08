@@ -42,6 +42,11 @@ const Navbar = () => {
           ))}
           {user ? (
             <div className="flex items-center gap-3">
+              {isAdmin && (
+                <Link to="/admin" className="flex items-center gap-1 text-sm text-primary transition-colors hover:text-primary/80">
+                  <Shield className="h-3.5 w-3.5" /> Admin
+                </Link>
+              )}
               <NotificationBell />
               <span className="font-mono text-xs text-muted-foreground">{user.email}</span>
               <Button variant="secondary" size="sm" onClick={handleSignOut} className="gap-1">
