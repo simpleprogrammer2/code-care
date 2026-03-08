@@ -22,6 +22,7 @@ const mockReview: Review = {
   num_lines: null,
   num_files: null,
   submission_type: "paste",
+  completed_at: null,
 };
 
 describe("ReviewCard", () => {
