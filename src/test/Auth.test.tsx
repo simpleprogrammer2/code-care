@@ -65,10 +65,10 @@ describe("Auth Page", () => {
     fireEvent.change(screen.getByLabelText("Display Name"), { target: { value: "testuser" } });
     fireEvent.change(screen.getByLabelText("Email"), { target: { value: "a@b.com" } });
     fireEvent.change(screen.getByLabelText("Password"), { target: { value: "123456" } });
-    const submitBtn = screen.getByRole("button", { name: /sign up/i });
-    // Get the submit button (the one with type="submit")
-    const form = screen.getByRole("form") ?? submitBtn.closest("form");
-    fireEvent.submit(form!);
+    // Use the submit button inside the form (type="submit") to avoid navbar duplicate
+    const allSignUpBtns = screen.getAllByRole("button", { name: /sign up/i });
+    const submitBtn = allSignUpBtns.find(btn => btn.getAttribute("type") === "submit")!;
+    fireEvent.click(submitBtn);
     await waitFor(() => expect(mockSignUp).toHaveBeenCalledWith("a@b.com", "123456", "testuser"));
   });
 
