@@ -135,6 +135,7 @@ export type Database = {
       reviews: {
         Row: {
           code_snippet: string
+          completed_at: string | null
           created_at: string
           description: string | null
           id: string
@@ -153,6 +154,7 @@ export type Database = {
         }
         Insert: {
           code_snippet: string
+          completed_at?: string | null
           created_at?: string
           description?: string | null
           id?: string
@@ -171,6 +173,7 @@ export type Database = {
         }
         Update: {
           code_snippet?: string
+          completed_at?: string | null
           created_at?: string
           description?: string | null
           id?: string
