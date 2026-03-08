@@ -10,6 +10,7 @@ import NotificationBell from "@/components/NotificationBell";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { user, signOut } = useAuth();
+  const { data: isAdmin } = useIsAdmin();
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
