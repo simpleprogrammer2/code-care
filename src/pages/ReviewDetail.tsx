@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import sdk from "@stackblitz/sdk";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { useReview, usePickUpReview, useSubmitFeedback } from "@/hooks/useReviews";
+import { useReview, usePickUpReview, useSubmitFeedback, useDeleteReview } from "@/hooks/useReviews";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -11,7 +11,18 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
-import { ArrowLeft, Star, Send, Code2, Loader2 } from "lucide-react";
+import { ArrowLeft, Star, Send, Code2, Loader2, Trash2, Clock } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 /** Map our language labels → StackBlitz project template + file extension */
 const langConfig: Record<string, { template: "node" | "typescript"; ext: string; runner: string }> = {
@@ -34,12 +45,24 @@ const ReviewDetail = () => {
   const { data: review, isLoading } = useReview(id || "");
   const pickUp = usePickUpReview();
   const submitFeedback = useSubmitFeedback();
+  const deleteReview = useDeleteReview();
   const embedRef = useRef<HTMLDivElement>(null);
   const embedLoaded = useRef(false);
 
   const [feedback, setFeedback] = useState("");
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
+
+  const handleDelete = async () => {
+    if (!id) return;
+    try {
+      await deleteReview.mutateAsync(id);
+      toast.success("Review deleted successfully");
+      navigate("/browse");
+    } catch {
+      toast.error("Failed to delete review");
+    }
+  };
 
   // Embed StackBlitz when review loads
   useEffect(() => {
@@ -274,6 +297,51 @@ const ReviewDetail = () => {
                 </div>
               )}
               <p className="text-sm text-foreground whitespace-pre-wrap">{review.reviewer_feedback}</p>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Delete section for completed reviews (requester only) */}
+        {review.status === "completed" && isRequester && (
+          <Card className="mb-6 border-destructive/30">
+            <CardContent className="flex items-center justify-between p-6">
+              <div className="flex items-start gap-3">
+                <Clock className="mt-0.5 h-5 w-5 text-muted-foreground" />
+                <div>
+                  <p className="font-mono font-semibold text-foreground">Auto-deletion scheduled</p>
+                  <p className="text-sm text-muted-foreground">
+                    This review will be automatically deleted 30 days after completion.
+                    {review.completed_at && (
+                      <> Scheduled for deletion on{" "}
+                        <span className="font-medium text-foreground">
+                          {new Date(new Date(review.completed_at).getTime() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString()}
+                        </span>.
+                      </>
+                    )}
+                  </p>
+                </div>
+              </div>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive" size="sm" className="gap-2 shrink-0">
+                    <Trash2 className="h-4 w-4" /> Delete Now
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Delete this review?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action cannot be undone. The review, feedback, and all associated data will be permanently removed.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleDelete} disabled={deleteReview.isPending}>
+                      {deleteReview.isPending ? "Deleting..." : "Delete permanently"}
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </CardContent>
           </Card>
         )}

@@ -78,6 +78,25 @@ export const usePickUpReview = () => {
   });
 };
 
+export const useDeleteReview = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (reviewId: string) => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Not authenticated");
+
+      const { error } = await supabase
+        .from("reviews")
+        .delete()
+        .eq("id", reviewId)
+        .eq("requester_id", user.id)
+        .eq("status", "completed");
+      if (error) throw error;
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: REVIEWS_KEY }),
+  });
+};
+
 export const useSubmitFeedback = () => {
   const queryClient = useQueryClient();
   return useMutation({
