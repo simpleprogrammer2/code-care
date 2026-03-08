@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -10,14 +10,15 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { toast } from "sonner";
-import { Send, LogIn, Code, Link as LinkIcon, FileText } from "lucide-react";
+import { Send, LogIn, Code, Link as LinkIcon, Upload, X } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useCreateReview } from "@/hooks/useReviews";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 const LANGUAGES = ["TypeScript", "JavaScript", "Python", "Go", "Rust", "Java", "C++", "Ruby", "SQL", "Other"];
 
-type SubmissionType = "paste" | "link" | "metadata";
+type SubmissionType = "paste" | "link" | "upload";
 
 const SubmitReview = () => {
   const [title, setTitle] = useState("");
