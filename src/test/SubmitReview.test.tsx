@@ -56,16 +56,16 @@ describe("SubmitReview Page", () => {
     expect(screen.getByPlaceholderText("Paste your code here...")).toBeInTheDocument();
   });
 
-  it("switches to link tab and shows URL input", () => {
+  it("switches to link tab and shows URL input", async () => {
     renderSubmit();
     fireEvent.click(screen.getByText("By Link"));
-    expect(screen.getByPlaceholderText(/github.com/)).toBeInTheDocument();
+    expect(await screen.findByLabelText("Repository or file link *")).toBeInTheDocument();
   });
 
-  it("switches to metadata tab and shows lines/files inputs", () => {
+  it("switches to metadata tab and shows lines/files inputs", async () => {
     renderSubmit();
     fireEvent.click(screen.getByText("Lines / Files"));
-    expect(screen.getByLabelText("Number of lines *")).toBeInTheDocument();
+    expect(await screen.findByLabelText("Number of lines *")).toBeInTheDocument();
     expect(screen.getByLabelText("Number of files *")).toBeInTheDocument();
   });
 
