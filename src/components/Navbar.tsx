@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
+import NotificationBell from "@/components/NotificationBell";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -39,6 +40,7 @@ const Navbar = () => {
           ))}
           {user ? (
             <div className="flex items-center gap-3">
+              <NotificationBell />
               <span className="font-mono text-xs text-muted-foreground">{user.email}</span>
               <Button variant="secondary" size="sm" onClick={handleSignOut} className="gap-1">
                 <LogOut className="h-3 w-3" /> Sign Out
