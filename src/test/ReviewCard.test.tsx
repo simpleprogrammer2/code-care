@@ -18,6 +18,10 @@ const mockReview: Review = {
   reviewer_rating: null,
   created_at: new Date().toISOString(),
   updated_at: new Date().toISOString(),
+  source_url: null,
+  num_lines: null,
+  num_files: null,
+  submission_type: "paste",
 };
 
 describe("ReviewCard", () => {
