@@ -93,6 +93,14 @@ export const useSubmitFeedback = () => {
         .select()
         .single();
       if (error) throw error;
+
+      // Notify the requester
+      await supabase.from("notifications").insert({
+        user_id: data.requester_id,
+        review_id: data.id,
+        message: `Your review "${data.title}" has been completed with a ${rating}★ rating!`,
+      });
+
       return data;
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: REVIEWS_KEY }),

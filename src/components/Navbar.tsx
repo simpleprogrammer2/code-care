@@ -40,6 +40,7 @@ const Navbar = () => {
           ))}
           {user ? (
             <div className="flex items-center gap-3">
+              <NotificationBell />
               <span className="font-mono text-xs text-muted-foreground">{user.email}</span>
               <Button variant="secondary" size="sm" onClick={handleSignOut} className="gap-1">
                 <LogOut className="h-3 w-3" /> Sign Out
