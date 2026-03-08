@@ -45,12 +45,24 @@ const ReviewDetail = () => {
   const { data: review, isLoading } = useReview(id || "");
   const pickUp = usePickUpReview();
   const submitFeedback = useSubmitFeedback();
+  const deleteReview = useDeleteReview();
   const embedRef = useRef<HTMLDivElement>(null);
   const embedLoaded = useRef(false);
 
   const [feedback, setFeedback] = useState("");
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
+
+  const handleDelete = async () => {
+    if (!id) return;
+    try {
+      await deleteReview.mutateAsync(id);
+      toast.success("Review deleted successfully");
+      navigate("/browse");
+    } catch {
+      toast.error("Failed to delete review");
+    }
+  };
 
   // Embed StackBlitz when review loads
   useEffect(() => {
