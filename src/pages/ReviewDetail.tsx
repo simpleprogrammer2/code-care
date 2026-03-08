@@ -44,7 +44,7 @@ const ReviewDetail = () => {
   // Embed StackBlitz when review loads
   useEffect(() => {
     if (!review || !embedRef.current || embedLoaded.current) return;
-    if (review.status !== "in_review" && review.status !== "completed") return;
+    if (review.status !== "in_review") return;
 
     const cfg = langConfig[review.language] || langConfig.Other;
     const fileName = `index.${cfg.ext}`;
@@ -121,7 +121,7 @@ const ReviewDetail = () => {
   const isReviewer = user?.id === review.reviewer_id;
   const isRequester = user?.id === review.requester_id;
   const canPickUp = review.status === "open" && user && !isRequester;
-  const showSandbox = review.status === "in_review" || review.status === "completed";
+  const showSandbox = review.status === "in_review";
   const canSubmitFeedback = review.status === "in_review" && isReviewer;
 
   return (
