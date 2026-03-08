@@ -92,6 +92,7 @@ const BrowseReviews = () => {
                 isAuthenticated={!!user}
                 onPickUp={handlePickUp}
                 onTip={(r) => setTipReview(r)}
+                onClick={handleCardClick}
               />
             ))}
           </div>

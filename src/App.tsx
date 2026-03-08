@@ -7,6 +7,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 import Index from "./pages/Index";
 import SubmitReview from "./pages/SubmitReview";
 import BrowseReviews from "./pages/BrowseReviews";
+import ReviewDetail from "./pages/ReviewDetail";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
